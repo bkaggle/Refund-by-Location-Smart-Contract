@@ -19,7 +19,7 @@ Download and Install Node.js and npm from
 
 Clone the repository to your local machine.
 ```
- git clone https://www.https://github.com/bkaggle/GeoLogix-dapp.git
+ git clone https://www.https://github.com/bkaggle/Refund-by-Location-Smart-Contract.git
 
 ```
 

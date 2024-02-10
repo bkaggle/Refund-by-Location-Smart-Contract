@@ -1,9 +1,9 @@
 const HDWalletProvider = require('@truffle/hdwallet-provider');
 
-// Your 12 word mnemonic
+
 const MNEMONIC = 'amazing analyst chuckle between obscure ice void skill parrot strike input profit';
 
-// Your Infura project ID
+
 const INFURA_PROJECT_ID = 'ec4fe7fa399c4a5d9c53bd59e430ac0a';
 
 module.exports = {

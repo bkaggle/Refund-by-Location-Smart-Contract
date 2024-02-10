@@ -39,7 +39,7 @@ Monitor refund transactions and compliance status on the dApp interface.
 Use the AI assistant for customer support and real-time updates.
 
 ## Testing
-Test smart contracts using Brownie, Hardhat, or Truffle testing frameworks.
+Test smart contracts using Truffle testing frameworks.
 Perform frontend testing using Jest, Mocha, or Cypress.
 Security Considerations
 Follow best practices for smart contract development to ensure security.

@@ -1,8 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.9;
 
-contract LBRC {
-
+contract Location {
     address public employer;
     address[] public employees;
 
@@ -16,19 +15,16 @@ contract LBRC {
     }
 
     mapping(address => ContractStatus) public empContractStatus;
-    //////////////////////////////////////////////////////////////////////
-    // helper functions
+
     constructor () {
         employer = msg.sender;
     }
-    
-    // Define a re-usable access modifier
-    // To be used when the contract updating and emplyee
-    // data submission functions are called
+
     modifier onlyEmployer() {
-        require(msg.sender == employer, "Only employeer has access to this function");
+        require(msg.sender == employer, "Only employer has access to this function");
         _;
     }
+
     modifier onlyEmployee(address _addr) {
         require(msg.sender == _addr, "Only an employee has access to this function");
         bool exists = false;
@@ -40,7 +36,7 @@ contract LBRC {
             }
         }
 
-        require(exists, "Only an  employee has access to this function");
+        require(exists, "Only an employee has access to this function");
         _;
     }
 
@@ -53,18 +49,13 @@ contract LBRC {
         }
     }
 
-    function getDistance(
-        int8 _lat,
-        int8 _lon
-    ) private view returns (int256 dist) {
+    function getDistance(int8 _lat, int8 _lon) private view returns (int256 dist) {
         int256 x = _lat - empContractStatus[msg.sender].cenLat;
         int256 y = _lon - empContractStatus[msg.sender].cenLon;
         dist = sqrt(x**2 + y**2);
         return dist;
     }
 
-    ///////////////////////////////////////////////////////////////
-    // only employer has access
     function setAccount(
         address _empAddr,
         int8 _cenLat,
@@ -72,42 +63,30 @@ contract LBRC {
         int8 _radius,
         uint8 _payAmount,
         uint8 _reqAmount
-        // Should also set the duration the contract will be checking for
-        ) public onlyEmployer() {
-            employees.push(_empAddr); // should delete if it is already in the list
-            empContractStatus[_empAddr].cenLat = _cenLat;
-            empContractStatus[_empAddr].cenLon = _cenLon;
-            empContractStatus[_empAddr].radius = _radius;
-            empContractStatus[_empAddr].payAmount = _payAmount;
-            empContractStatus[_empAddr].compCount = 0;
-            empContractStatus[_empAddr].reqAmount = _reqAmount;
+    ) public onlyEmployer() {
+        employees.push(_empAddr);
+        empContractStatus[_empAddr].cenLat = _cenLat;
+        empContractStatus[_empAddr].cenLon = _cenLon;
+        empContractStatus[_empAddr].radius = _radius;
+        empContractStatus[_empAddr].payAmount = _payAmount;
+        empContractStatus[_empAddr].compCount = 0;
+        empContractStatus[_empAddr].reqAmount = _reqAmount;
     }
 
-    function updateStatus(
-        int8 _lat, 
-        int8 _lon
-        ) public {
-            int256 dist = getDistance(_lat, _lon);
-            if (dist < empContractStatus[msg.sender].radius) {
-                empContractStatus[msg.sender].compCount = empContractStatus[msg.sender].compCount + 1;
-            }
+    function updateStatus(int8 _lat, int8 _lon) public {
+        int256 dist = getDistance(_lat, _lon);
+        if (dist < empContractStatus[msg.sender].radius) {
+            empContractStatus[msg.sender].compCount += 1;
+        }
     }
 
     function payMe(address payable _to) public payable onlyEmployee(_to) {
-        require(empContractStatus[_to].compCount > empContractStatus[_to].reqAmount);
+        require(empContractStatus[_to].compCount > empContractStatus[_to].reqAmount, "Payment conditions not met");
         bool sent = _to.send(empContractStatus[_to].payAmount);
         require(sent, "Failed to send Ether");
     }
-    
-    // function getEmpStatus(address _empAdd) public view returns (bool) {
-    //     // For now it returns true if the update was successfull atlest once.
-    //     if (empContractStatus[_empAdd].compCount > 3) return true;
-    //     else return false;
-    // }
 
     function getAdmin() public view returns(address) {
         return employer;
     }
-
-    
 }

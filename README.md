@@ -29,6 +29,7 @@ Install dependencies using npm install.
 Set up Truffle for Ethereum smart contract development.
 Compile and deploy smart contracts to your preferred Ethereum network (mainnet, testnet, or private network).
 Develop the frontend dApp using React, Angular, or Vue.js.
+Develope the mobile app using React native or flutter.
 Integrate GPS sensor functionality into the frontend dApp for real-time location data.
 
 ## Usage

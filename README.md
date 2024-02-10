@@ -23,22 +23,13 @@ Clone the repository to your local machine.
 
 ```
 
-This project demonstrates a Hardhat use case. It comes with a sample contract, a test for that contract, and a script that deploys that contract.
-
-Try running some of the following tasks:
-```
-npx hardhat help
-npx hardhat test
-REPORT_GAS=true npx hardhat test
-npx hardhat node
-npx hardhat run scripts/deploy.js
-```
 
 Install dependencies using npm install.
 
-Set up Brownie, Hardhat, or Truffle for Ethereum smart contract development.
+Set up Truffle for Ethereum smart contract development.
 Compile and deploy smart contracts to your preferred Ethereum network (mainnet, testnet, or private network).
 Develop the frontend dApp using React, Angular, or Vue.js.
+Develope the mobile app using React native or flutter.
 Integrate GPS sensor functionality into the frontend dApp for real-time location data.
 
 ## Usage
